@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import axios from "axios";
 import styled from 'styled-components';
 
 import LOGO from './../img/logo.png';
@@ -15,14 +16,14 @@ export default function MainPage() {
             <img src={LOGO} alt="logo"></img>
             <Login>
                 <input
-                    type="text"
+                    type="email"
                     placeholder="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     required
                 />
                 <input
-                    type="text"
+                    type="password"
                     placeholder="senha"
                     value={password}
                     onChange={e => setPassword(e.target.value)}

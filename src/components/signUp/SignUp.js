@@ -1,33 +1,62 @@
 import { useState } from "react";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import styled from 'styled-components';
 
 import LOGO from './../img/logo.png';
 
 export default function MainPage() {
 
+    const navigate = useNavigate();
+
+    const [isDisabled, setIsDisabled] = useState(false);
     const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
     const [name, setName] = useState("");
-    const [photo, setPhoto] = useState("");
+    const [image, setImage] = useState("");
+
+    const user = {
+        email: {email},
+        name: {name},
+        image: {image},
+        password: {password}
+    }
+
+    function SignUpFail() {
+        alert("ERRO: Não foi possível cadastrar o usuário! Por favor, tente novamente!");
+        setIsDisabled(false);
+    }
+
+    function createUser(event) {
+        event.preventDefault();
+        setIsDisabled(true);
+		const request = axios.post(
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
+            {user}
+        );
+        request.then(() => navigate('/'));
+        request.catch(SignUpFail);
+    }
 
     return (
         <>
         <Container>
             <img src={LOGO} alt="logo"></img>
-            <Login>
+            <SignIn onSubmit={createUser}>
                 <input
-                    type="text"
+                    type="email"
                     placeholder="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
+                    disabled={isDisabled}
                     required
                 />
                 <input
-                    type="text"
+                    type="password"
                     placeholder="senha"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
+                    disabled={isDisabled}
                     required
                 />
                 <input
@@ -35,19 +64,21 @@ export default function MainPage() {
                     placeholder="nome"
                     value={name}
                     onChange={e => setName(e.target.value)}
+                    disabled={isDisabled}
                     required
                 />
                 <input
-                    type="text"
+                    type="url"
                     placeholder="foto"
-                    value={photo}
-                    onChange={e => setPhoto(e.target.value)}
+                    value={image}
+                    onChange={e => setImage(e.target.value)}
+                    disabled={isDisabled}
                     required
                 />
-                <button type="submit">
+                <button type="submit" disabled={isDisabled}>
                     Cadastrar
                 </button>
-            </Login>
+            </SignIn>
             <Link to={`/`}>
                 <p>Já tem uma conta? Faça login!</p>
             </Link>
@@ -87,7 +118,7 @@ const Container = styled.div`
     }
 `;
 
-const Login = styled.form`
+const SignIn = styled.form`
     @media(max-width: 1334px) {
         top: 0;
         left: 0;
@@ -98,7 +129,7 @@ const Login = styled.form`
         justify-content: center;
         align-items: flex-start;
 
-        input[type=text] {
+        input {
             width: 100%;
             height: 45px;
             margin-bottom: 6px;
