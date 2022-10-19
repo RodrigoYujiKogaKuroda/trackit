@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from 'styled-components';
+import { ThreeDots } from 'react-loader-spinner'
 
 import LOGO from './../img/logo.png';
 
@@ -10,16 +11,17 @@ export default function MainPage() {
     const navigate = useNavigate();
 
     const [isDisabled, setIsDisabled] = useState(false);
+
     const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [image, setImage] = useState("");
 
     const user = {
-        email: {email},
-        name: {name},
-        image: {image},
-        password: {password}
+        email: email,
+        name: name,
+        image: image,
+        password: password
     }
 
     function SignUpFail() {
@@ -29,6 +31,7 @@ export default function MainPage() {
 
     function createUser(event) {
         event.preventDefault();
+        console.log(user);
         setIsDisabled(true);
 		const request = axios.post(
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
@@ -76,7 +79,18 @@ export default function MainPage() {
                     required
                 />
                 <button type="submit" disabled={isDisabled}>
-                    Cadastrar
+                    {isDisabled ? 
+                        <ThreeDots 
+                            height="13" 
+                            width="51" 
+                            radius="9"
+                            color="#ffffff" 
+                            ariaLabel="three-dots-loading"
+                            wrapperStyle={{}}
+                            wrapperClassName=""
+                            visible={isDisabled}
+                        />
+                     : "Cadastrar" }
                 </button>
             </SignIn>
             <Link to={`/`}>
@@ -143,6 +157,13 @@ const SignIn = styled.form`
             border-radius: 5px;
         }
 
+        input:disabled {
+            color: #afafaf;
+            background: #f2f2f2;
+            border: 1px solid #d5d5d5;
+            border-radius: 5px;
+        }
+
         ::placeholder {
             color: #dbdbdb;
         }
@@ -160,6 +181,9 @@ const SignIn = styled.form`
             background-color: #52b6ff;
             border: none;
             border-radius: 4.63636px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     }
 `;

@@ -2,11 +2,14 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import styled from 'styled-components';
+import { ThreeDots } from 'react-loader-spinner'
 
 import LOGO from './../img/logo.png';
 
 export default function MainPage() {
 
+    const [isDisabled, setIsDisabled] = useState(false);
+    
     const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -29,8 +32,19 @@ export default function MainPage() {
                     onChange={e => setPassword(e.target.value)}
                     required
                 />
-                <button type="submit">
-                    Entrar
+                <button type="submit" disabled={isDisabled}>
+                    {isDisabled ? 
+                        <ThreeDots 
+                            height="13" 
+                            width="51" 
+                            radius="9"
+                            color="#ffffff" 
+                            ariaLabel="three-dots-loading"
+                            wrapperStyle={{}}
+                            wrapperClassName=""
+                            visible={isDisabled}
+                        />
+                     : "Entrar" }
                 </button>
             </Login>
             <Link to={`/cadastro`}>
