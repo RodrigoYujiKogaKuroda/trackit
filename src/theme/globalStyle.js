@@ -33,8 +33,6 @@ const GlobalStyle = createGlobalStyle`
     }
     body {
         line-height: 1;
-        width: 100%;
-        height: 100%;
     }
     ol, ul {
         list-style: none;
@@ -51,27 +49,6 @@ const GlobalStyle = createGlobalStyle`
         border-collapse: collapse;
         border-spacing: 0;
     }
-
-    .menuBody {
-        min-width: 100%;
-        margin-top: 112px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    .pageTitle {
-        font-style: normal;
-        font-weight: 400;
-        font-size: 24px;
-        line-height: 28px;
-        letter-spacing: 0.04em;
-    }
-
-    ::placeholder {		
-		font-style: italic;
-		color: #afafaf;
-	}
 `;
 
 export default GlobalStyle;
