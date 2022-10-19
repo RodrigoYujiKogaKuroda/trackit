@@ -8,6 +8,8 @@ export default function MainPage() {
 
     const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+    const [photo, setPhoto] = useState("");
 
     return (
         <>
@@ -28,12 +30,26 @@ export default function MainPage() {
                     onChange={e => setPassword(e.target.value)}
                     required
                 />
+                <input
+                    type="text"
+                    placeholder="nome"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    required
+                />
+                <input
+                    type="text"
+                    placeholder="foto"
+                    value={photo}
+                    onChange={e => setPhoto(e.target.value)}
+                    required
+                />
                 <button type="submit">
-                    Entrar
+                    Cadastrar
                 </button>
             </Login>
-            <Link to={`/cadastro`}>
-                <p>Não tem uma conta? Cadastre-se!</p>
+            <Link to={`/`}>
+                <p>Já tem uma conta? Faça login!</p>
             </Link>
         </Container>
         </>
