@@ -17,8 +17,7 @@ export default function Login() {
 	const [password, setPassword] = useState("");
 
     function loginSucess() {
-        alert("Deu certo aqui, amigo!");
-        setIsDisabled(false);
+        navigate('/hoje');
     }
 
     function loginFail() {
