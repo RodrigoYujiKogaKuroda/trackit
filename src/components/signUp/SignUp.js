@@ -18,13 +18,6 @@ export default function SignUp() {
     const [name, setName] = useState("");
     const [image, setImage] = useState("");
 
-    const user = {
-        email: email,
-        name: name,
-        image: image,
-        password: password
-    }
-
     function signUpFail() {
         alert("ERRO: Não foi possível cadastrar o usuário! Por favor, tente novamente!");
         setIsDisabled(false);
@@ -32,7 +25,6 @@ export default function SignUp() {
 
     function createUser(event) {
         event.preventDefault();
-        console.log(user);
         setIsDisabled(true);
 		const request = axios.post(
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",

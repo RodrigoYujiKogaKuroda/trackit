@@ -16,9 +16,9 @@ export default function Login() {
     const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-    const user = {
-        email: email,
-        password: password
+    function loginSucess() {
+        alert("Deu certo aqui, amigo!");
+        setIsDisabled(false);
     }
 
     function loginFail() {
@@ -28,7 +28,6 @@ export default function Login() {
 
     function loginUser(event) {
         event.preventDefault();
-        console.log(user);
         setIsDisabled(true);
 		const request = axios.post(
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
@@ -37,7 +36,7 @@ export default function Login() {
                 password: password
             }
         );
-        request.then(() => navigate('/'));
+        request.then(loginSucess);
         request.catch(loginFail);
     }
 
