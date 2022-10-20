@@ -18,6 +18,13 @@ export default function SignUp() {
     const [name, setName] = useState("");
     const [image, setImage] = useState("");
 
+    const [user, setUser] = useState({
+        email: '',
+        name: '',
+        image: '',
+        password: '',
+      });
+
     function signUpFail() {
         alert("ERRO: Não foi possível cadastrar o usuário! Por favor, tente novamente!");
         setIsDisabled(false);
@@ -28,16 +35,18 @@ export default function SignUp() {
         setIsDisabled(true);
 		const request = axios.post(
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
-            {
-                email: email,
-                name: name,
-                image: image,
-                password: password
-            }
+            user
         );
         request.then(() => navigate('/'));
         request.catch(signUpFail);
     }
+
+    function handleForm (e) {
+        setUser({
+            ...user,
+            [e.target.name]: e.target.value,
+        })
+      }
 
     return (
         <>
@@ -47,32 +56,36 @@ export default function SignUp() {
                 <input
                     type="email"
                     placeholder="email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
+                    name="email"
+                    onChange={handleForm}
+                    value={user.email}
                     disabled={isDisabled}
                     required
                 />
                 <input
                     type="password"
                     placeholder="senha"
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
+                    name="password"
+                    onChange={handleForm}
+                    value={user.password}
                     disabled={isDisabled}
                     required
                 />
                 <input
                     type="text"
                     placeholder="nome"
-                    value={name}
-                    onChange={e => setName(e.target.value)}
+                    name="name"
+                    onChange={handleForm}
+                    value={user.name}
                     disabled={isDisabled}
                     required
                 />
                 <input
                     type="url"
                     placeholder="foto"
-                    value={image}
-                    onChange={e => setImage(e.target.value)}
+                    name="image"
+                    onChange={handleForm}
+                    value={user.image}
                     disabled={isDisabled}
                     required
                 />
