@@ -13,11 +13,6 @@ export default function SignUp() {
 
     const [isDisabled, setIsDisabled] = useState(false);
 
-    const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-    const [name, setName] = useState("");
-    const [image, setImage] = useState("");
-
     const [user, setUser] = useState({
         email: '',
         name: '',
