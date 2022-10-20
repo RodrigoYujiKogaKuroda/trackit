@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from 'styled-components';
+
 import { ThreeDots } from 'react-loader-spinner'
 
 import LOGO from './../img/logo.png';
 
-export default function MainPage() {
+export default function SignUp() {
 
     const navigate = useNavigate();
 
@@ -24,7 +25,7 @@ export default function MainPage() {
         password: password
     }
 
-    function SignUpFail() {
+    function signUpFail() {
         alert("ERRO: Não foi possível cadastrar o usuário! Por favor, tente novamente!");
         setIsDisabled(false);
     }
@@ -35,17 +36,22 @@ export default function MainPage() {
         setIsDisabled(true);
 		const request = axios.post(
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
-            {user}
+            {
+                email: email,
+                name: name,
+                image: image,
+                password: password
+            }
         );
         request.then(() => navigate('/'));
-        request.catch(SignUpFail);
+        request.catch(signUpFail);
     }
 
     return (
         <>
         <Container>
             <img src={LOGO} alt="logo"></img>
-            <SignIn onSubmit={createUser}>
+            <SignUpForm onSubmit={createUser}>
                 <input
                     type="email"
                     placeholder="email"
@@ -88,11 +94,11 @@ export default function MainPage() {
                             ariaLabel="three-dots-loading"
                             wrapperStyle={{}}
                             wrapperClassName=""
-                            visible={isDisabled}
+                            visible={true}
                         />
                      : "Cadastrar" }
                 </button>
-            </SignIn>
+            </SignUpForm>
             <Link to={`/`}>
                 <p>Já tem uma conta? Faça login!</p>
             </Link>
@@ -132,7 +138,7 @@ const Container = styled.div`
     }
 `;
 
-const SignIn = styled.form`
+const SignUpForm = styled.form`
     @media(max-width: 1334px) {
         top: 0;
         left: 0;

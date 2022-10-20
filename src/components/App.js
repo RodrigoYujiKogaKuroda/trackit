@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GlobalStyle from '../theme/globalStyle';
 
-import MainPage from "./mainPage/MainPage";
+import Login from "./login/Login";
 import SignUp from "./signUp/SignUp";
 
 export default function App() {
@@ -11,7 +11,7 @@ export default function App() {
         <GlobalStyle />
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<MainPage />} />
+                <Route path="/" element={<Login />} />
                 <Route path="/cadastro" element={<SignUp />} />
             </Routes>
         </BrowserRouter>
