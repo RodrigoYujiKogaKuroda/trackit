@@ -6,7 +6,9 @@ import Section from './Section.js';
 
 import Login from "./login/Login";
 import SignUp from "./signUp/SignUp";
+import Habits from "./habits/Habits";
 import Today from "./today/Today";
+import Record from "./record/Record";
 
 export default function App() {
 
@@ -14,17 +16,21 @@ export default function App() {
         <>
         <GlobalStyle />
         <BrowserRouter>
-            <Routes>
+            <Section>
                 <Section>
-                    <Section>
+                    <Routes>
                         <Route path="/" element={<Login />} />
                         <Route path="/cadastro" element={<SignUp />} />
-                    </Section>
-                    <Section>
-                        <Route path="/hoje" element={<Today />} />
-                    </Section>
+                    </Routes>
                 </Section>
-            </Routes>
+                <Section>
+                    <Routes>
+                        <Route path="/habitos" element={<Habits />} />
+                        <Route path="/hoje" element={<Today />} />
+                        <Route path="/historico" element={<Record />} />
+                    </Routes>
+                </Section>
+            </Section>
         </BrowserRouter>
         </>
     );

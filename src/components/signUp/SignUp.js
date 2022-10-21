@@ -126,7 +126,7 @@ const Container = styled.div`
         }
 
         p {
-            font-family: 'Lexend Deca';
+            font-family: 'Lexend Deca', sans-serif;
             font-style: normal;
             font-weight: 400;
             font-size: 13.976px;
