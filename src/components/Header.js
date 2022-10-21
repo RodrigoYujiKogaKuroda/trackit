@@ -1,14 +1,16 @@
+import { useContext, useState } from "react";
 import styled from 'styled-components';
-
-import TEST from './img/test.png';
+import { AuthContext } from "./contexts/auth";
 
 export default function Header() {
+
+    const {user} = useContext(AuthContext);
 
     return (
         <>
         <Container>
             <p>TrackIt</p>
-            <img src={TEST} alt="userImage" />
+            <img src={user.image} alt="userImage" />
         </Container>
         </>
     );
