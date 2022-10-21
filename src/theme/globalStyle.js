@@ -23,7 +23,7 @@ const GlobalStyle = createGlobalStyle`
         border: 0;
         font-size: 100%;
         font: inherit;
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Lexend Deca', sans-serif;
         vertical-align: baseline;
     }
 

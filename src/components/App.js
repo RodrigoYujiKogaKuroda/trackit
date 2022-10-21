@@ -19,8 +19,7 @@ export default function App() {
                 <Routes>
                     <Route path="/" element={<Login />} />
                     <Route path="/cadastro" element={<SignUp />} />
-                </Routes>
-                <Routes>
+                    
                     <Route path="/habitos" element={<Habits />} />
                     <Route path="/hoje" element={<Today />} />
                     <Route path="/historico" element={<Record />} />

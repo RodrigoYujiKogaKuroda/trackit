@@ -1,12 +1,14 @@
+import { useContext } from "react";
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
+import { AuthContext } from "./contexts/auth";
 
 import { CircularProgressbar,buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 export default function Footer() {
 
-    const percentage = 66;
+    const {percentage} = useContext(AuthContext);
 
     return (
         <>
