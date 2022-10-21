@@ -49,6 +49,27 @@ const GlobalStyle = createGlobalStyle`
         border-collapse: collapse;
         border-spacing: 0;
     }
+
+    @media(max-width: 1334px) {
+        .mainContainer {
+            min-width: 100%;
+            min-height: 100vh;
+            padding: 98px 17px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            background: #e5e5e5;
+        }
+        .mainTitle {
+            font-family: 'Lexend Deca', sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 22.976px;
+            line-height: 29px;
+            color: #126ba5;
+        }
+    }
 `;
 
 export default GlobalStyle;

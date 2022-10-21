@@ -6,7 +6,7 @@ export default function AuthProvider({children}) {
 
     const [user, setUser] = useState({});
 
-    const percentage = 67;
+    const [percentage, setPercentage] = useState(0);
 
     return (
         <AuthContext.Provider value={{ user, setUser, percentage }}>
