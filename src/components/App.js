@@ -1,8 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GlobalStyle from '../theme/globalStyle';
 
-import Heading from './Heading.js';
-import Section from './Section.js';
+import AuthProvider from "./contexts/auth";
 
 import Login from "./login/Login";
 import SignUp from "./signUp/SignUp";
@@ -15,23 +14,19 @@ export default function App() {
     return (
         <>
         <GlobalStyle />
-        <BrowserRouter>
-            <Section>
-                <Section>
-                    <Routes>
-                        <Route path="/" element={<Login />} />
-                        <Route path="/cadastro" element={<SignUp />} />
-                    </Routes>
-                </Section>
-                <Section>
-                    <Routes>
-                        <Route path="/habitos" element={<Habits />} />
-                        <Route path="/hoje" element={<Today />} />
-                        <Route path="/historico" element={<Record />} />
-                    </Routes>
-                </Section>
-            </Section>
-        </BrowserRouter>
+        <AuthProvider>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Login />} />
+                    <Route path="/cadastro" element={<SignUp />} />
+                </Routes>
+                <Routes>
+                    <Route path="/habitos" element={<Habits />} />
+                    <Route path="/hoje" element={<Today />} />
+                    <Route path="/historico" element={<Record />} />
+                </Routes>
+            </BrowserRouter>
+        </AuthProvider>
         </>
     );
 

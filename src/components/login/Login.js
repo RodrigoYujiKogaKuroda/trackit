@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from 'styled-components';
+import { AuthContext } from "../contexts/auth";
 
 import { ThreeDots } from 'react-loader-spinner'
 
@@ -16,7 +17,10 @@ export default function Login() {
     const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-    function loginSucess() {
+    const {setUser} = useContext(AuthContext);
+
+    function loginSucess(data) {
+        setUser({...data});
         navigate('/hoje');
     }
 
@@ -35,7 +39,7 @@ export default function Login() {
                 password: password
             }
         );
-        request.then(loginSucess);
+        request.then(response => loginSucess(response.data));
         request.catch(loginFail);
     }
 

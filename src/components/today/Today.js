@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import styled from 'styled-components';
+import { AuthContext } from "../contexts/auth";
 
 import Header from "./../Header";
 import Footer from "./../Footer";
