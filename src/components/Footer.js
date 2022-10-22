@@ -33,7 +33,7 @@ export default function Footer() {
                     />
                 </Link>
             </ProgressBar>
-            <Link to={`/habitos`} style={{ textDecoration: 'none' }}>
+            <Link to={`/historico`} style={{ textDecoration: 'none' }}>
                 <p>Histórico</p>
             </Link>
         </Container>

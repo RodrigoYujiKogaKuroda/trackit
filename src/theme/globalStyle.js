@@ -54,7 +54,7 @@ const GlobalStyle = createGlobalStyle`
         .mainContainer {
             min-width: 100%;
             min-height: 100vh;
-            padding: 98px 17px;
+            padding: 92px 17px 70px 17px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -62,12 +62,22 @@ const GlobalStyle = createGlobalStyle`
             background: #e5e5e5;
         }
         .mainTitle {
+            margin-top: 6px;
             font-family: 'Lexend Deca', sans-serif;
             font-style: normal;
             font-weight: 400;
             font-size: 22.976px;
             line-height: 29px;
             color: #126ba5;
+        }
+        .genericText {
+            margin-top: 17px;
+            font-family: 'Lexend Deca', sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 17.976px;
+            line-height: 22px;
+            color: #666666;
         }
     }
 `;
