@@ -1,18 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import styled from 'styled-components';
 
 import Header from "./../Header";
 import Footer from "./../Footer";
 
+import HabitAdd from "./HabitAdd";
+
 export default function Habits() {
 
+    const [displayAdd, setDisplayAdd] = useState(false);
     const [isDisabled, setIsDisabled] = useState(false);
 
     const [habitName, setHabitName] = useState("");
+    const [selectedDays, setSelectedDays] = useState([]);
+
+    const weekStyling = ["default", "default", "default", "default", "default", "default", "default"];
 
     function addHabit() {
+        setDisplayAdd(true);
+    }
 
+    function markDay(index) {
+        const isSelected = selectedDays.some(d => index === d);
+        if (isSelected) {
+            const newList = selectedDays.filter(d => index !== d);
+            weekStyling[index] = "default";
+            console.log(weekStyling);
+            setSelectedDays(newList);
+            console.log(newList);
+        } else {
+            const test = [...selectedDays, index];
+            weekStyling[index] = "selected";
+            console.log(weekStyling);
+            setSelectedDays(test);
+            console.log(test);
+        }
     }
 
     return (
@@ -20,37 +43,20 @@ export default function Habits() {
         <Header />
         <div className="mainContainer">
             <SuperiorLine>
-                <h1 className="mainTitle">Sexta-feira, 21/10</h1>
+                <h1 className="mainTitle">Meus hábitos</h1>
                 <button onClick={addHabit}>+</button>
             </SuperiorLine>
             <HabitList>
-                <Habit>
-                    <input
-                        type="text"
-                        placeholder="nome do hábito"
-                        value={habitName}
-                        onChange={e => setHabitName(e.target.value)}
-                        disabled={isDisabled}
-                        required
-                    />
-                    <Week>
-                        <Weekday>D</Weekday>
-                        <Weekday>S</Weekday>
-                        <Weekday>T</Weekday>
-                        <Weekday>Q</Weekday>
-                        <Weekday>Q</Weekday>
-                        <Weekday>S</Weekday>
-                        <Weekday>S</Weekday>
-                    </Week>
-                    <BottomLine>
-                        <p>Cancelar</p>
-                        <button>Salvar</button>
-                    </BottomLine>
-                </Habit>
-            </HabitList>
-            <p className="genericText">
+                <HabitAdd
+                    displayAdd={displayAdd}
+                    setDisplayAdd={setDisplayAdd}
+                    weekStyling={weekStyling}
+                    markDay={markDay}
+                />
+                <p className="genericText">
                 Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
-            </p>
+                </p>
+            </HabitList>
         </div>
         <Footer />
         </>
@@ -95,105 +101,5 @@ const HabitList = styled.div`
         flex-direction: column;
         justify-content: center;
         align-items: center;
-    }
-`;
-
-const Habit = styled.div`
-    @media(max-width: 1334px) {
-        position: relative;
-        width: 100%;
-        height: 180px;
-        padding: 18px 16px 15px 19px;
-        background: #ffffff;
-        border-radius: 5px;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-
-        input {
-            width: 100%;
-            height: 45px;
-            margin-bottom: 8px;
-            padding: 9px 11px 11px 11px;
-            font-family: 'Lexend Deca', sans-serif;
-            font-style: normal;
-            font-weight: 400;
-            font-size: 19.976px;
-            line-height: 25px;
-            border: 1px solid #D5D5D5;
-            border-radius: 5px;
-        }
-
-        ::placeholder {
-            color: #dbdbdb;
-        }
-    }
-`;
-
-const Week = styled.div`
-    @media(max-width: 1334px) {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-`;
-
-const Weekday = styled.button`
-    @media(max-width: 1334px) {
-        width: 30px;
-        height: 30px;
-        font-family: 'Lexend Deca', sans-serif;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 19.976px;
-        line-height: 25px;
-        color: #dbdbdb;
-        background: #ffffff;
-        border: 1px solid #d5d5d5;
-        border-radius: 5px;
-    }
-`;
-
-const BottomLine = styled.div`
-    @media(max-width: 1334px) {
-        position: absolute;
-        bottom: 15px;
-        right: 16px;
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-
-        p {
-            font-family: 'Lexend Deca', sans-serif;
-            font-style: normal;
-            font-weight: 400;
-            font-size: 15.976px;
-            line-height: 20px;
-            text-align: center;
-            color: #52b6ff;
-        }
-
-        button {
-            width: 84px;
-            height: 35px;
-            margin-left: 23px;
-            padding: 0;
-            font-family: 'Lexend Deca', sans-serif;
-            font-style: normal;
-            font-weight: 400;
-            font-size: 15.976px;
-            line-height: 20px;
-            text-align: center;
-            color: #ffffff;
-            background-color: #52b6ff;
-            border: none;
-            border-radius: 4.63636px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
     }
 `;

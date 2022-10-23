@@ -6,7 +6,7 @@ import { AuthContext } from "../contexts/auth";
 
 import { ThreeDots } from 'react-loader-spinner'
 
-import LOGO from './../img/logo.png';
+import LOGO from "./../../assets/img/logo.png";
 
 export default function Login() {
 
