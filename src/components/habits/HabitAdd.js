@@ -1,23 +1,35 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import styled from 'styled-components';
 
-import { daysColors } from "./../constants/colors"
+import Weekday from "./Weekday"
 
 export default function HabitAdd({
     displayAdd,
-    setDisplayAdd,
-    weekStyling,
-    markDay
+    setDisplayAdd
 }) {
 
     const [isDisabled, setIsDisabled] = useState(false);
     const [habitName, setHabitName] = useState("");
-
-    const week = ["D", "S", "T", "Q", "Q", "S", "S"];
+    const [selectedDays, setSelectedDays] = useState([]);
     
+    const week = ["D", "S", "T", "Q", "Q", "S", "S"];
+
     function closeDisplay() {
         setDisplayAdd(false);
+    }
+
+    function markDay(index) {
+        const isSelected = selectedDays.some(d => index === d);
+        if (isSelected) {
+            const newList = selectedDays.filter(d => index !== d);
+            setSelectedDays(newList);
+            console.log(newList);
+        } else {
+            const test = [...selectedDays, index];
+            setSelectedDays(test);
+            console.log(test);
+        }
     }
 
     return (
@@ -34,13 +46,13 @@ export default function HabitAdd({
             <Week>
                 {week.map ((day, index) =>
                     <Weekday
-                        status={weekStyling[index]}
                         key={index}
-                        onClick={() => markDay(index)}
-                        disabled={isDisabled}
-                    >
-                        {day}
-                    </Weekday>
+                        day={day}
+                        index={index}
+                        isDisabled={isDisabled}
+                        markDay={markDay}
+                        isSelected={selectedDays.some(d => index === d)}
+                    />
                 )}
             </Week>
             <BottomLine>
@@ -53,7 +65,7 @@ export default function HabitAdd({
 
 }
 
-const Habit = styled.div`
+const Habit = styled.form`
     @media(max-width: 1334px) {
         display: ${props => props.displayAdd ? "block" : "none !important"};
         position: relative;
@@ -93,22 +105,6 @@ const Week = styled.div`
         display: flex;
         justify-content: space-between;
         align-items: center;
-    }
-`;
-
-const Weekday = styled.button`
-    @media(max-width: 1334px) {
-        width: 30px;
-        height: 30px;
-        font-family: 'Lexend Deca', sans-serif;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 19.976px;
-        line-height: 25px;
-        color: ${props => daysColors[props.status].color};
-        background: ${props => daysColors[props.status].background};
-        border: 1px solid ${props => daysColors[props.status].border};
-        border-radius: 5px;
     }
 `;
 

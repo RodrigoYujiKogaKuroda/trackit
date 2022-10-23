@@ -10,32 +10,9 @@ import HabitAdd from "./HabitAdd";
 export default function Habits() {
 
     const [displayAdd, setDisplayAdd] = useState(false);
-    const [isDisabled, setIsDisabled] = useState(false);
-
-    const [habitName, setHabitName] = useState("");
-    const [selectedDays, setSelectedDays] = useState([]);
-
-    const weekStyling = ["default", "default", "default", "default", "default", "default", "default"];
 
     function addHabit() {
         setDisplayAdd(true);
-    }
-
-    function markDay(index) {
-        const isSelected = selectedDays.some(d => index === d);
-        if (isSelected) {
-            const newList = selectedDays.filter(d => index !== d);
-            weekStyling[index] = "default";
-            console.log(weekStyling);
-            setSelectedDays(newList);
-            console.log(newList);
-        } else {
-            const test = [...selectedDays, index];
-            weekStyling[index] = "selected";
-            console.log(weekStyling);
-            setSelectedDays(test);
-            console.log(test);
-        }
     }
 
     return (
@@ -50,11 +27,9 @@ export default function Habits() {
                 <HabitAdd
                     displayAdd={displayAdd}
                     setDisplayAdd={setDisplayAdd}
-                    weekStyling={weekStyling}
-                    markDay={markDay}
                 />
                 <p className="genericText">
-                Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
+                    Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
                 </p>
             </HabitList>
         </div>
