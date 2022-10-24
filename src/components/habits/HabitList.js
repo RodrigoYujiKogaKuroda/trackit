@@ -10,7 +10,7 @@ export default function HabitAdd({ week, habitList }) {
     console.log(habitList);
 
     function deleteHabit(id) {
-
+        console.log(`Delete habit ${id}?`);
     }
 
     return (
@@ -23,7 +23,14 @@ export default function HabitAdd({ week, habitList }) {
                 </SuperiorLine>
                 <Week>
                     {week.map((day, index) => 
-                        <Day key={index} status="default">
+                        <Day
+                            key={index}
+                            status={
+                                habit.days.includes(index) ?
+                                    "selected"
+                                :
+                                    "default"
+                            }>
                             {day}
                         </Day>
                     )}

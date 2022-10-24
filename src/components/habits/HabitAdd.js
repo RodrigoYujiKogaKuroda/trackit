@@ -32,10 +32,11 @@ export default function HabitAdd({
     }
 
     function addSucess(data) {
-        setHabitName("");
+        setPostSucess(data);
         setDisplayAdd(false);
         setIsDisabled(false);
-        setPostSucess(data); 
+        setHabitName("");
+        setSelectedDays([]);
     }
 
     function addFail() {
