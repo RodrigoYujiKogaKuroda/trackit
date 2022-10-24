@@ -2,14 +2,16 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import styled from 'styled-components';
 import { AuthContext } from "../contexts/auth";
-import 'dayjs/locale/pt-br'
+import 'dayjs/locale/pt-br';
 
 import Header from "./../Header";
 import Footer from "./../Footer";
 
+import TodayHabit from "./TodayHabit";
+
 export default function Today() {
 
-    const [todayList, setTodayList] = useState([]);
+    const [habitList, setHabitList] = useState([]);
 
     const {user, percentage} = useContext(AuthContext);
 
@@ -24,7 +26,7 @@ export default function Today() {
         );
         
         request.then(response => {
-            setTodayList(response.data);
+            setHabitList(response.data);
         });
         request.catch(error => {
             console.log(error.response.data);
@@ -42,6 +44,11 @@ export default function Today() {
                     : "Nenhum hábito concluído ainda"
                 }
             </Description>
+            <TodayList>
+                {habitList.map((habit, index) =>
+                    <TodayHabit habit={habit} index={index} />
+                )}
+            </TodayList>
         </div>
         <Footer />
         </>
@@ -51,11 +58,22 @@ export default function Today() {
 
 const Description = styled.p`
     @media(max-width: 1334px) {
+        margin-bottom: 28px;
         font-family: 'Lexend Deca', sans-serif;
         font-style: normal;
         font-weight: 400;
         font-size: 17.976px;
         line-height: 22px;
         color: ${props => props.percentage > 0 ? '#8fc549' : '#bababa'};
+    }
+`;
+
+const TodayList = styled.div`
+    @media(max-width: 1334px) {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
     }
 `;

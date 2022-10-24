@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import styled from 'styled-components';
 import { AuthContext } from "./contexts/auth";
 
@@ -28,25 +28,25 @@ const Container = styled.div`
         display: flex;
         justify-content: space-between;
         align-items: center;
-    }
 
-    p {
-        font-family: 'Playball', cursive;
-        font-weight: 400;
-        font-size: 38.982px;
-        margin-left: 18px;
-        top: 0;
-        left: 0;
-        line-height: 49px;
-        color: #ffffff;
-    }
+        p {
+            font-family: 'Playball', cursive;
+            font-weight: 400;
+            font-size: 38.982px;
+            margin-left: 18px;
+            top: 0;
+            left: 0;
+            line-height: 49px;
+            color: #ffffff;
+        }
 
-    img {
-        width: 51px;
-        height: 51px;
-        margin-right: 10px;
-        bottom: 0;
-        right: 0;
-        border-radius: 98.5px;
+        img {
+            width: 51px;
+            height: 51px;
+            margin-right: 10px;
+            bottom: 0;
+            right: 0;
+            border-radius: 98.5px;
+        }
     }
 `;

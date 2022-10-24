@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import axios from "axios";
 import styled from 'styled-components';
 import { AuthContext } from "../contexts/auth";
@@ -13,10 +13,6 @@ export default function HabitAdd({
 }) {
 
     const {user} = useContext(AuthContext);
-
-    function deleteSucess() {
-        setAxiosSucess({});
-    }
 
     function deleteHabit(id) {
         const shouldDelete = window.confirm("Tem certeza que você quer deletar este hábito?");
@@ -97,9 +93,11 @@ const SuperiorLine = styled.div`
 `;
 
 const Delete = styled(TrashOutline)`
-    width: 13px;
-    height: 15px;
-    color: "#000000";
+    @media(max-width: 1334px) {
+        width: 13px;
+        height: 15px;
+        color: "#000000";
+    }
 `;
 
 const Week = styled.div`
