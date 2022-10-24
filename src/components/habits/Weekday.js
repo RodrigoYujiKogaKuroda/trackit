@@ -35,7 +35,7 @@ export default function Weekday({
 
 }
 
-const Day = styled.button`
+const Day = styled.div`
     @media(max-width: 1334px) {
         width: 30px;
         height: 30px;
@@ -48,5 +48,8 @@ const Day = styled.button`
         background: ${props => daysColors[props.status].background};
         border: 1px solid ${props => daysColors[props.status].border};
         border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        text-align: center;
     }
 `;

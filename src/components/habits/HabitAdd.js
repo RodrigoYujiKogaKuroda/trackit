@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import styled from 'styled-components';
+import { AuthContext } from "../contexts/auth";
+
+import { ThreeDots } from 'react-loader-spinner'
 
 import Weekday from "./Weekday"
 
@@ -15,6 +18,35 @@ export default function HabitAdd({
     
     const week = ["D", "S", "T", "Q", "Q", "S", "S"];
 
+    const {user} = useContext(AuthContext);
+
+    const config = {
+        headers: {
+            "Authorization":  `Bearer ${user.token}`
+        }
+    }
+
+    const habit = {
+        name: habitName,
+        days: selectedDays.sort()
+    }
+
+    function addFail() {
+        alert("ERRO: Não foi possível registrar o hábito! Por favor, tente novamente!");
+        setIsDisabled(false);
+    }
+
+    function createHabit(event) {
+        event.preventDefault();
+        setIsDisabled(true);
+		const request = axios.post(
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+            habit, config
+        );
+        request.then(() => window.location.reload());
+        request.catch(addFail);
+    }
+
     function closeDisplay() {
         setDisplayAdd(false);
     }
@@ -24,17 +56,15 @@ export default function HabitAdd({
         if (isSelected) {
             const newList = selectedDays.filter(d => index !== d);
             setSelectedDays(newList);
-            console.log(newList);
         } else {
             const test = [...selectedDays, index];
             setSelectedDays(test);
-            console.log(test);
         }
     }
 
     return (
         <>
-        <Habit displayAdd={displayAdd}>
+        <Habit displayAdd={displayAdd} onSubmit={createHabit}>
             <input
                 type="text"
                 placeholder="nome do hábito"
@@ -56,8 +86,21 @@ export default function HabitAdd({
                 )}
             </Week>
             <BottomLine>
-                <p onClick={closeDisplay}>Cancelar</p>
-                <button>Salvar</button>
+                <p onClick={closeDisplay} disabled={isDisabled}>Cancelar</p>
+                <button type="submit" disabled={isDisabled}>
+                    {isDisabled ? 
+                        <ThreeDots 
+                            height="13" 
+                            width="51" 
+                            radius="9"
+                            color="#ffffff" 
+                            ariaLabel="three-dots-loading"
+                            wrapperStyle={{}}
+                            wrapperClassName=""
+                            visible={true}
+                        />
+                     : "Salvar" }
+                </button>
             </BottomLine>
         </Habit>
         </>
@@ -90,6 +133,13 @@ const Habit = styled.form`
             font-size: 19.976px;
             line-height: 25px;
             border: 1px solid #D5D5D5;
+            border-radius: 5px;
+        }
+
+        input:disabled {
+            color: #afafaf;
+            background: #f2f2f2;
+            border: 1px solid #d5d5d5;
             border-radius: 5px;
         }
 

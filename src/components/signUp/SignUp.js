@@ -41,7 +41,7 @@ export default function SignUp() {
             ...user,
             [e.target.name]: e.target.value,
         })
-      }
+    }
 
     return (
         <>

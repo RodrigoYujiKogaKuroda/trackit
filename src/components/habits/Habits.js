@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import styled from 'styled-components';
+import { AuthContext } from "../contexts/auth";
 
 import Header from "./../Header";
 import Footer from "./../Footer";
@@ -8,6 +9,26 @@ import Footer from "./../Footer";
 import HabitAdd from "./HabitAdd";
 
 export default function Habits() {
+
+    const [habitList, setHabitList] = useState({});
+
+    const {user} = useContext(AuthContext);
+
+    const isListEmpty = Object.keys(habitList).length === 0;
+
+    useEffect(() => {
+        const request = axios.get(
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+            { headers: { Authorization: `Bearer ${user.token}` } }
+        );
+        
+        request.then(response => {
+            setHabitList(response.data);
+        });
+        request.catch(error => {
+            console.log(error.response.data);
+        });
+    });
 
     const [displayAdd, setDisplayAdd] = useState(false);
 
@@ -28,9 +49,16 @@ export default function Habits() {
                     displayAdd={displayAdd}
                     setDisplayAdd={setDisplayAdd}
                 />
-                <p className="genericText">
-                    Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
-                </p>
+                {isListEmpty ?
+                    <p className="genericText">
+                        Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
+                    </p>
+                    
+                :
+                    <p className="genericText">
+                        Você tem hábitos! Faça-os agora!
+                    </p>
+                }
             </HabitList>
         </div>
         <Footer />

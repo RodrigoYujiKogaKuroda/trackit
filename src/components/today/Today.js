@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import styled from 'styled-components';
 import { AuthContext } from "../contexts/auth";
@@ -17,17 +17,19 @@ export default function Today() {
     dayjs.locale('pt-br');
     const weekDay = dayjs().format('dddd')[0].toUpperCase() + dayjs().format('dddd').slice(1)
 
-    const request = axios.get(
-        "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",
-        { headers: { Authorization: `Bearer ${user.token}` } }
-    );
-    
-    request.then(response => {
-        setTodayList(response.data);
+    useEffect(() => {
+        const request = axios.get(
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",
+            { headers: { Authorization: `Bearer ${user.token}` } }
+        );
+        
+        request.then(response => {
+            setTodayList(response.data);
+        });
+        request.catch(error => {
+            console.log(error.response.data);
+        });
     });
-    request.catch(error => {
-		console.log(error.response.data);
-	});
 
     return (
         <>
