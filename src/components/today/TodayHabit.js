@@ -20,15 +20,17 @@ export default function TodayHabit({
         const habitsDoneList = habitsDone + 1;
         setAxiosSucess(data);
         setHabitsDone(habitsDoneList);
+        setIsDisabled(false);
     }
 
     function postSucessSubtract(data) {
         const habitsDoneList = habitsDone - 1;
         setAxiosSucess(data);
         setHabitsDone(habitsDoneList);
+        setIsDisabled(false);
     }
 
-    function postFail(error) {
+    function postFail() {
         alert(`ERRO: não foi possível realizar a operação. Por favor, tente novamente.`);
     }
 
@@ -51,8 +53,8 @@ export default function TodayHabit({
             request.then(response => {
                 postSucessAdd(response.data);
             });
-            request.catch(error => {
-                postFail(error.response.data);
+            request.catch(() => {
+                postFail();
             });
         } else {
             const request = axios.post(
@@ -148,6 +150,7 @@ const TextLine = styled.h2`
 
 const TodayMark = styled.button`
     @media(max-width: 1334px) {
+        pointer-events: ${(props) => props.isDisabled ? 'none' : null};
         width: 69px;
         height: 69px;
         background: ${props => props.done ? "#8fc549" : "#ebebeb"};
