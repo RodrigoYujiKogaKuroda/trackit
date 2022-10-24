@@ -1,16 +1,35 @@
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import styled from 'styled-components';
+import { AuthContext } from "../contexts/auth";
 import { TrashOutline } from 'react-ionicons'
 
 import { daysColors } from "./../constants/colors"
 
-export default function HabitAdd({ week, habitList }) {
+export default function HabitAdd({
+    week,
+    setAxiosSucess,
+    habitList
+}) {
 
-    console.log(habitList);
+    const {user} = useContext(AuthContext);
+
+    function deleteSucess() {
+        setAxiosSucess({});
+    }
 
     function deleteHabit(id) {
-        console.log(`Delete habit ${id}?`);
+        const shouldDelete = window.confirm("Tem certeza que você quer deletar este hábito?");
+        if (shouldDelete) {
+            const request = axios.delete(
+                `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
+                { headers: { Authorization: `Bearer ${user.token}` } }
+            );
+            request.then(() => setAxiosSucess({}));
+            request.catch(error => {
+                console.log(error.response.data);
+            });
+        }
     }
 
     return (

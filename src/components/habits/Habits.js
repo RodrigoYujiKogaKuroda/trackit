@@ -13,7 +13,7 @@ export default function Habits() {
 
     const week = ["D", "S", "T", "Q", "Q", "S", "S"];
 
-    const [postSucess, setPostSucess] = useState({});
+    const [axiosSucess, setAxiosSucess] = useState({});
     const [habitList, setHabitList] = useState({});
 
     const {user} = useContext(AuthContext);
@@ -32,7 +32,7 @@ export default function Habits() {
         request.catch(error => {
             console.log(error.response.data);
         });
-    }, [postSucess]);
+    }, [axiosSucess]);
 
     const [displayAdd, setDisplayAdd] = useState(false);
 
@@ -51,7 +51,7 @@ export default function Habits() {
             <MainMenu>
                 <HabitAdd
                     week={week}
-                    setPostSucess={setPostSucess}
+                    setAxiosSucess={setAxiosSucess}
                     displayAdd={displayAdd}
                     setDisplayAdd={setDisplayAdd}
                 />
@@ -60,7 +60,11 @@ export default function Habits() {
                         Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
                     </p>
                 :
-                    <HabitList week={week} habitList={habitList} />
+                    <HabitList
+                        week={week}
+                        setAxiosSucess={setAxiosSucess}
+                        habitList={habitList}
+                    />
                 }
             </MainMenu>
         </div>

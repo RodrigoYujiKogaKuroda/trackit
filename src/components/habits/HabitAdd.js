@@ -9,7 +9,7 @@ import Weekday from "./Weekday"
 
 export default function HabitAdd({
     week,
-    setPostSucess,
+    setAxiosSucess,
     displayAdd,
     setDisplayAdd
 }) {
@@ -32,7 +32,7 @@ export default function HabitAdd({
     }
 
     function addSucess(data) {
-        setPostSucess(data);
+        setAxiosSucess(data);
         setDisplayAdd(false);
         setIsDisabled(false);
         setHabitName("");
