@@ -11,6 +11,7 @@ import TodayHabit from "./TodayHabit";
 
 export default function Today() {
 
+    const [axiosSucess, setAxiosSucess] = useState({});
     const [habitList, setHabitList] = useState([]);
 
     const {user, percentage} = useContext(AuthContext);
@@ -31,7 +32,7 @@ export default function Today() {
         request.catch(error => {
             console.log(error.response.data);
         });
-    });
+    }, [axiosSucess]);
 
     return (
         <>
@@ -45,8 +46,8 @@ export default function Today() {
                 }
             </Description>
             <TodayList>
-                {habitList.map((habit, index) =>
-                    <TodayHabit habit={habit} index={index} />
+                {habitList.map((habit) =>
+                    <TodayHabit setAxiosSucess={setAxiosSucess} habit={habit} />
                 )}
             </TodayList>
         </div>
