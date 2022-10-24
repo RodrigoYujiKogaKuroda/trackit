@@ -8,6 +8,8 @@ import { ThreeDots } from 'react-loader-spinner'
 import Weekday from "./Weekday"
 
 export default function HabitAdd({
+    week,
+    setPostSucess,
     displayAdd,
     setDisplayAdd
 }) {
@@ -15,8 +17,6 @@ export default function HabitAdd({
     const [isDisabled, setIsDisabled] = useState(false);
     const [habitName, setHabitName] = useState("");
     const [selectedDays, setSelectedDays] = useState([]);
-    
-    const week = ["D", "S", "T", "Q", "Q", "S", "S"];
 
     const {user} = useContext(AuthContext);
 
@@ -31,6 +31,13 @@ export default function HabitAdd({
         days: selectedDays.sort()
     }
 
+    function addSucess(data) {
+        setHabitName("");
+        setDisplayAdd(false);
+        setIsDisabled(false);
+        setPostSucess(data); 
+    }
+
     function addFail() {
         alert("ERRO: Não foi possível registrar o hábito! Por favor, tente novamente!");
         setIsDisabled(false);
@@ -43,12 +50,10 @@ export default function HabitAdd({
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
             habit, config
         );
-        request.then(() => window.location.reload());
+        request.then(response => {
+            addSucess(response.data);
+        });
         request.catch(addFail);
-    }
-
-    function closeDisplay() {
-        setDisplayAdd(false);
     }
 
     function markDay(index) {
@@ -86,7 +91,7 @@ export default function HabitAdd({
                 )}
             </Week>
             <BottomLine>
-                <p onClick={closeDisplay} disabled={isDisabled}>Cancelar</p>
+                <p onClick={() => setDisplayAdd(false)} disabled={isDisabled}>Cancelar</p>
                 <button type="submit" disabled={isDisabled}>
                     {isDisabled ? 
                         <ThreeDots 
@@ -114,6 +119,7 @@ const Habit = styled.form`
         position: relative;
         width: 100%;
         height: 180px;
+        margin-bottom: 28px;
         padding: 18px 16px 15px 19px;
         background: #ffffff;
         border-radius: 5px;

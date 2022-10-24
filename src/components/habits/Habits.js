@@ -7,9 +7,13 @@ import Header from "./../Header";
 import Footer from "./../Footer";
 
 import HabitAdd from "./HabitAdd";
+import HabitList from "./HabitList";
 
 export default function Habits() {
 
+    const week = ["D", "S", "T", "Q", "Q", "S", "S"];
+
+    const [postSucess, setPostSucess] = useState({});
     const [habitList, setHabitList] = useState({});
 
     const {user} = useContext(AuthContext);
@@ -28,7 +32,7 @@ export default function Habits() {
         request.catch(error => {
             console.log(error.response.data);
         });
-    });
+    }, [postSucess]);
 
     const [displayAdd, setDisplayAdd] = useState(false);
 
@@ -44,8 +48,10 @@ export default function Habits() {
                 <h1 className="mainTitle">Meus hábitos</h1>
                 <button onClick={addHabit}>+</button>
             </SuperiorLine>
-            <HabitList>
+            <MainMenu>
                 <HabitAdd
+                    week={week}
+                    setPostSucess={setPostSucess}
                     displayAdd={displayAdd}
                     setDisplayAdd={setDisplayAdd}
                 />
@@ -53,13 +59,10 @@ export default function Habits() {
                     <p className="genericText">
                         Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
                     </p>
-                    
                 :
-                    <p className="genericText">
-                        Você tem hábitos! Faça-os agora!
-                    </p>
+                    <HabitList week={week} habitList={habitList} />
                 }
-            </HabitList>
+            </MainMenu>
         </div>
         <Footer />
         </>
@@ -95,7 +98,7 @@ const SuperiorLine = styled.div`
     }
 `;
 
-const HabitList = styled.div`
+const MainMenu = styled.div`
     @media(max-width: 1334px) {
         width: 100%;
         margin-top: 20px;
