@@ -33,12 +33,13 @@ export default function HabitAdd({
         {habitList.map((habit, index) =>
             <Habit key={index}>
                 <SuperiorLine>
-                    <h1>{habit.name}</h1>
-                    <Delete onClick={() => deleteHabit(habit.id)}></Delete>
+                    <h1 data-identifier="habit-name">{habit.name}</h1>
+                    <Delete data-identifier="delete-habit-btn" onClick={() => deleteHabit(habit.id)}></Delete>
                 </SuperiorLine>
                 <Week>
                     {week.map((day, index) => 
                         <Day
+                            data-identifier="week-day-btn"
                             key={index}
                             status={
                                 habit.days.includes(index) ?

@@ -71,14 +71,14 @@ export default function TodayHabit({
 
     return (
         <>
-        <TodayBox>
+        <TodayBox data-identifier="today-infos">
             <TodayText>
                 <h1>{habit.name}</h1>
                 <TextLine greenIt={habit.done}>Sequência atual:<p>{habit.currentSequence} dias</p></TextLine>
                 <TextLine greenIt={isItBiggerThan(habit)}>Seu recorde:<p>{habit.highestSequence} dias</p></TextLine>
             </TodayText>
             <TodayMark done={habit.done} isDisabled={isDisabled}>
-                <img src={CHECKMARK} alt="check" onClick={() => markBox(habit.done, habit.id)}></img>
+                <img data-identifier="done-habit-btn" src={CHECKMARK} alt="check" onClick={() => markBox(habit.done, habit.id)}></img>
             </TodayMark>
         </TodayBox>
         </>

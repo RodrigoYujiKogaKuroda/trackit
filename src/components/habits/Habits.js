@@ -46,7 +46,7 @@ export default function Habits() {
         <div className="mainContainer">
             <SuperiorLine>
                 <h1 className="mainTitle">Meus hábitos</h1>
-                <button onClick={addHabit}>+</button>
+                <button data-identifier="create-habit-btn" onClick={addHabit}>+</button>
             </SuperiorLine>
             <MainMenu>
                 <HabitAdd
@@ -56,7 +56,7 @@ export default function Habits() {
                     setDisplayAdd={setDisplayAdd}
                 />
                 {isListEmpty ?
-                    <p className="genericText">
+                    <p data-identifier="no-habit-message" className="genericText">
                         Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
                     </p>
                 :

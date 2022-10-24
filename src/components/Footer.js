@@ -13,7 +13,7 @@ export default function Footer() {
     return (
         <>
         <Container>
-            <Link to={`/habitos`} style={{ textDecoration: 'none' }}>
+            <Link data-identifier="habit-page-action" to={`/habitos`} style={{ textDecoration: 'none' }}>
                 <p>Hábitos</p>
             </Link>
             <ProgressBar>
@@ -33,7 +33,7 @@ export default function Footer() {
                     />
                 </Link>
             </ProgressBar>
-            <Link to={`/historico`} style={{ textDecoration: 'none' }}>
+            <Link data-identifier="historic-page-action" to={`/historico`} style={{ textDecoration: 'none' }}>
                 <p>Histórico</p>
             </Link>
         </Container>

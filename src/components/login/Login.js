@@ -49,6 +49,7 @@ export default function Login() {
             <img src={LOGO} alt="logo"></img>
             <LoginForm onSubmit={loginUser}>
                 <input
+                    data-identifier="input-email"
                     type="email"
                     placeholder="email"
                     value={email}
@@ -57,6 +58,7 @@ export default function Login() {
                     required
                 />
                 <input
+                    data-identifier="input-password"
                     type="password"
                     placeholder="senha"
                     value={password}
@@ -64,7 +66,7 @@ export default function Login() {
                     disabled={isDisabled}
                     required
                 />
-                <button type="submit" disabled={isDisabled}>
+                <button data-identifier="login-btn" type="submit" disabled={isDisabled}>
                     {isDisabled ? 
                         <ThreeDots 
                             height="13" 
@@ -79,7 +81,7 @@ export default function Login() {
                      : "Entrar" }
                 </button>
             </LoginForm>
-            <Link to={`/cadastro`}>
+            <Link data-identifier="sign-up-action" to={`/cadastro`}>
                 <p>Não tem uma conta? Cadastre-se!</p>
             </Link>
         </Container>

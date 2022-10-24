@@ -72,6 +72,7 @@ export default function HabitAdd({
         <>
         <Habit displayAdd={displayAdd} onSubmit={createHabit}>
             <input
+                data-identifier="input-habit-name"
                 type="text"
                 placeholder="nome do hábito"
                 value={habitName}
@@ -82,6 +83,7 @@ export default function HabitAdd({
             <Week>
                 {week.map ((day, index) =>
                     <Weekday
+                        data-identifier="week-day-btn"
                         key={index}
                         day={day}
                         index={index}
@@ -92,8 +94,18 @@ export default function HabitAdd({
                 )}
             </Week>
             <BottomLine>
-                <p onClick={() => setDisplayAdd(false)} disabled={isDisabled}>Cancelar</p>
-                <button type="submit" disabled={isDisabled}>
+                <p
+                    data-identifier="cancel-habit-create-btn"
+                    onClick={() => setDisplayAdd(false)}
+                    disabled={isDisabled}
+                >
+                    Cancelar
+                </p>
+                <button
+                    data-identifier="save-habit-create-btn"
+                    type="submit"
+                    disabled={isDisabled}
+                >
                     {isDisabled ? 
                         <ThreeDots 
                             height="13" 

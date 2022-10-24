@@ -49,6 +49,7 @@ export default function SignUp() {
             <img src={LOGO} alt="logo"></img>
             <SignUpForm onSubmit={createUser}>
                 <input
+                    data-identifier="input-email"
                     type="email"
                     placeholder="email"
                     name="email"
@@ -58,6 +59,7 @@ export default function SignUp() {
                     required
                 />
                 <input
+                    data-identifier="input-password"
                     type="password"
                     placeholder="senha"
                     name="password"
@@ -67,6 +69,7 @@ export default function SignUp() {
                     required
                 />
                 <input
+                    data-identifier="input-name"
                     type="text"
                     placeholder="nome"
                     name="name"
@@ -76,6 +79,7 @@ export default function SignUp() {
                     required
                 />
                 <input
+                    data-identifier="input-photo"
                     type="url"
                     placeholder="foto"
                     name="image"
@@ -99,7 +103,7 @@ export default function SignUp() {
                      : "Cadastrar" }
                 </button>
             </SignUpForm>
-            <Link to={`/`}>
+            <Link data-identifier="back-to-login-action" to={`/`}>
                 <p>Já tem uma conta? Faça login!</p>
             </Link>
         </Container>

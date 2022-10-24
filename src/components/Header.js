@@ -10,7 +10,7 @@ export default function Header() {
         <>
         <Container>
             <p>TrackIt</p>
-            <img src={user.image} alt="userImage" />
+            <img data-identifier="avatar" src={user.image} alt="userImage" />
         </Container>
         </>
     );
