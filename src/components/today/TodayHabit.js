@@ -10,30 +10,34 @@ export default function TodayHabit({
     habit
 }) {
 
-    const {user, setPercentage, oneHundred, habitsDone, setHabitsDone} = useContext(AuthContext);
+    const {user, habitsDone, setHabitsDone} = useContext(AuthContext);
 
     const [isDisabled, setIsDisabled] = useState(false);
-    const [habitsDoneList, setHabitsDoneList] = useState(habitsDone);
+
+    const config = { headers: { Authorization: `Bearer ${user.token}` } };
 
     function postSucessAdd(data) {
-        setHabitsDoneList(habitsDone + 1);
+        const habitsDoneList = habitsDone + 1;
         setAxiosSucess(data);
-        setIsDisabled(false);
         setHabitsDone(habitsDoneList);
-        const percentageResult = Math.round((100 * habitsDoneList) / (oneHundred));
-        setPercentage(percentageResult);
     }
 
     function postSucessSubtract(data) {
         const habitsDoneList = habitsDone - 1;
         setAxiosSucess(data);
-        setIsDisabled(false);
         setHabitsDone(habitsDoneList);
     }
 
     function postFail(error) {
-        alert(`ERRO ${error}: não foi possível realizar a operação. Por favor, tente novamente.`);
-        setIsDisabled(false);
+        alert(`ERRO: não foi possível realizar a operação. Por favor, tente novamente.`);
+    }
+
+    function isItBiggerThan(habit) {
+        if ((habit.currentSequence >= habit.highestSequence) && (habit.highestSequence > 0)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     function markBox(done, id) {
@@ -41,7 +45,7 @@ export default function TodayHabit({
         if (done) {
             const request = axios.post(
                 `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`,
-                null, { headers: { Authorization: `Bearer ${user.token}` } }
+                null, config
             );
             
             request.then(response => {
@@ -53,7 +57,7 @@ export default function TodayHabit({
         } else {
             const request = axios.post(
                 `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`,
-                null, { headers: { Authorization: `Bearer ${user.token}` } }
+                null, config
             );
             
             request.then(response => {
@@ -70,8 +74,8 @@ export default function TodayHabit({
         <TodayBox>
             <TodayText>
                 <h1>{habit.name}</h1>
-                <TextLine>Sequência atual:<p>{habit.currentSequence} dias</p></TextLine>
-                <TextLine>Seu recorde:<p>{habit.highestSequence} dias</p></TextLine>
+                <TextLine greenIt={habit.done}>Sequência atual:<p>{habit.currentSequence} dias</p></TextLine>
+                <TextLine greenIt={isItBiggerThan(habit)}>Seu recorde:<p>{habit.highestSequence} dias</p></TextLine>
             </TodayText>
             <TodayMark done={habit.done} isDisabled={isDisabled}>
                 <img src={CHECKMARK} alt="check" onClick={() => markBox(habit.done, habit.id)}></img>
@@ -137,14 +141,13 @@ const TextLine = styled.h2`
 
         p {
             margin-left: 5px;
-            color: #666666;
+            color: ${props => props.greenIt ? "#8fc549" : "#666666"};
         }
     }
 `;
 
-const TodayMark = styled.div`
+const TodayMark = styled.button`
     @media(max-width: 1334px) {
-        disabled: ${props => props.isDisabled};
         width: 69px;
         height: 69px;
         background: ${props => props.done ? "#8fc549" : "#ebebeb"};

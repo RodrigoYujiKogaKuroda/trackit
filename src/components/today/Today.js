@@ -16,6 +16,8 @@ export default function Today() {
 
     const {user, percentage, setPercentage, oneHundred, setOneHundred, setHabitsDone} = useContext(AuthContext);
 
+    const config = { headers: { Authorization: `Bearer ${user.token}` } };
+
     const dayjs = require('dayjs');
     dayjs.locale('pt-br');
     const weekDay = dayjs().format('dddd')[0].toUpperCase() + dayjs().format('dddd').slice(1)
@@ -23,20 +25,17 @@ export default function Today() {
     function getSuccess(data){
         setHabitList(data);
         setOneHundred(data.length);
-        const doneSum = 0;
-        for (let i = 0; i , data.length; i++) {
-            if (data[i].done) {
-                doneSum += 1;
-            }
-        }
-        setHabitsDone(doneSum);
-        setPercentage(Math.round((100 * doneSum) / (oneHundred)));
+        const doneSum = data.filter(function (h) {
+          return h.done === true;
+        });
+        setHabitsDone(doneSum.length);
+        setPercentage(Math.round((100 * doneSum.length) / oneHundred));
     }
 
     useEffect(() => {
         const request = axios.get(
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",
-            { headers: { Authorization: `Bearer ${user.token}` } }
+            config
         );
         
         request.then(response => {
@@ -45,7 +44,7 @@ export default function Today() {
         request.catch(error => {
             console.log(error.response.data);
         });
-    }, [axiosSucess]);
+    }, [axiosSucess, percentage]);
 
     return (
         <>
