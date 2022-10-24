@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import styled from 'styled-components';
 import { AuthContext } from "../contexts/auth";
@@ -10,32 +10,57 @@ export default function TodayHabit({
     habit
 }) {
 
-    const {config} = useContext(AuthContext);
+    const {user, setPercentage, oneHundred, habitsDone, setHabitsDone} = useContext(AuthContext);
+
+    const [isDisabled, setIsDisabled] = useState(false);
+    const [habitsDoneList, setHabitsDoneList] = useState(habitsDone);
+
+    function postSucessAdd(data) {
+        setHabitsDoneList(habitsDone + 1);
+        setAxiosSucess(data);
+        setIsDisabled(false);
+        setHabitsDone(habitsDoneList);
+        const percentageResult = Math.round((100 * habitsDoneList) / (oneHundred));
+        setPercentage(percentageResult);
+    }
+
+    function postSucessSubtract(data) {
+        const habitsDoneList = habitsDone - 1;
+        setAxiosSucess(data);
+        setIsDisabled(false);
+        setHabitsDone(habitsDoneList);
+    }
+
+    function postFail(error) {
+        alert(`ERRO ${error}: não foi possível realizar a operação. Por favor, tente novamente.`);
+        setIsDisabled(false);
+    }
 
     function markBox(done, id) {
+        setIsDisabled(true);
         if (done) {
             const request = axios.post(
                 `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`,
-                {}, config
+                null, { headers: { Authorization: `Bearer ${user.token}` } }
             );
             
             request.then(response => {
-                setAxiosSucess(response.data);
+                postSucessAdd(response.data);
             });
             request.catch(error => {
-                console.log(error.response.data);
+                postFail(error.response.data);
             });
         } else {
             const request = axios.post(
                 `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`,
-                {}, config
+                null, { headers: { Authorization: `Bearer ${user.token}` } }
             );
             
             request.then(response => {
-                setAxiosSucess(response.data);
+                postSucessSubtract(response.data);
             });
             request.catch(error => {
-                console.log(error.response.data);
+                postFail(error.response.data);
             });
         }
     }
@@ -48,7 +73,7 @@ export default function TodayHabit({
                 <TextLine>Sequência atual:<p>{habit.currentSequence} dias</p></TextLine>
                 <TextLine>Seu recorde:<p>{habit.highestSequence} dias</p></TextLine>
             </TodayText>
-            <TodayMark done={habit.done}>
+            <TodayMark done={habit.done} isDisabled={isDisabled}>
                 <img src={CHECKMARK} alt="check" onClick={() => markBox(habit.done, habit.id)}></img>
             </TodayMark>
         </TodayBox>
@@ -119,6 +144,7 @@ const TextLine = styled.h2`
 
 const TodayMark = styled.div`
     @media(max-width: 1334px) {
+        disabled: ${props => props.isDisabled};
         width: 69px;
         height: 69px;
         background: ${props => props.done ? "#8fc549" : "#ebebeb"};

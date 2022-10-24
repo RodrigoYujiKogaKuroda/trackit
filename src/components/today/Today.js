@@ -14,11 +14,24 @@ export default function Today() {
     const [axiosSucess, setAxiosSucess] = useState({});
     const [habitList, setHabitList] = useState([]);
 
-    const {user, percentage} = useContext(AuthContext);
+    const {user, percentage, setPercentage, oneHundred, setOneHundred, setHabitsDone} = useContext(AuthContext);
 
     const dayjs = require('dayjs');
     dayjs.locale('pt-br');
     const weekDay = dayjs().format('dddd')[0].toUpperCase() + dayjs().format('dddd').slice(1)
+
+    function getSuccess(data){
+        setHabitList(data);
+        setOneHundred(data.length);
+        const doneSum = 0;
+        for (let i = 0; i , data.length; i++) {
+            if (data[i].done) {
+                doneSum += 1;
+            }
+        }
+        setHabitsDone(doneSum);
+        setPercentage(Math.round((100 * doneSum) / (oneHundred)));
+    }
 
     useEffect(() => {
         const request = axios.get(
@@ -27,7 +40,7 @@ export default function Today() {
         );
         
         request.then(response => {
-            setHabitList(response.data);
+            getSuccess(response.data);
         });
         request.catch(error => {
             console.log(error.response.data);
@@ -46,8 +59,8 @@ export default function Today() {
                 }
             </Description>
             <TodayList>
-                {habitList.map((habit) =>
-                    <TodayHabit setAxiosSucess={setAxiosSucess} habit={habit} />
+                {habitList.map((habit, index) =>
+                    <TodayHabit key={index} setAxiosSucess={setAxiosSucess} habit={habit} oneHundred={oneHundred}/>
                 )}
             </TodayList>
         </div>
